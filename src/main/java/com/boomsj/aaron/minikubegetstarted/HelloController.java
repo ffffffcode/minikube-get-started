@@ -1,6 +1,6 @@
 package com.boomsj.aaron.minikubegetstarted;
 
-import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -11,12 +11,14 @@ import org.springframework.web.bind.annotation.RestController;
  * @description
  * @date 2021/7/19 14:40
  */
+@Slf4j
 @RestController
 @RequestMapping("k8s/hello")
 public class HelloController {
 
     @GetMapping()
     public String hello() {
+        log.info("---------->访问 hello 接口");
         return "hello, k8s";
     }
 }
