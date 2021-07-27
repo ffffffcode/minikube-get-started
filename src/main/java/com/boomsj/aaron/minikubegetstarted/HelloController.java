@@ -1,6 +1,7 @@
 package com.boomsj.aaron.minikubegetstarted;
 
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -21,4 +22,14 @@ public class HelloController {
         log.info("---------->访问 hello 接口");
         return "hello, k8s";
     }
+
+    @Value("${name:minikube}")
+    private String name;
+
+    @GetMapping("/name")
+    public String name() {
+        log.info("---------->访问 name 接口");
+        return name;
+    }
+
 }
