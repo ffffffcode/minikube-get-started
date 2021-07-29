@@ -39,10 +39,15 @@ spec:
     spec:
       containers:
         - name: minikube-get-started
-          image: aaronfae/minikube-get-started:1.1.0
+          image: aaronfae/minikube-get-started:1.1.1
           env:
             - name: TIME_ZONE
               value: GMT+08
+            - name: name
+              valueFrom:
+                configMapKeyRef:
+                  name: hello-k8s-config-map
+                  key: name
           imagePullPolicy: Always
           ports:
             - containerPort: 8080
@@ -51,3 +56,11 @@ spec:
             limits:
               memory: 512Mi
               cpu: "1"
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: hello-k8s-config-map
+  namespace: aaron-test
+data:
+  name: aaron
