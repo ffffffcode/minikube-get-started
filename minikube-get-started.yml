@@ -39,16 +39,11 @@ spec:
     spec:
       containers:
         - name: minikube-get-started
-          image: aaronfae/minikube-get-started:1.1.1
+          image: aaronfae/minikube-get-started:1.2.1
+          imagePullPolicy: Always
           env:
             - name: TIME_ZONE
               value: GMT+08
-            - name: name
-              valueFrom:
-                configMapKeyRef:
-                  name: hello-k8s-config-map
-                  key: name
-          imagePullPolicy: Always
           ports:
             - containerPort: 8080
               protocol: TCP
@@ -56,6 +51,17 @@ spec:
             limits:
               memory: 512Mi
               cpu: "1"
+          volumeMounts:
+            - name: vol-hello-k8s-config-map
+              mountPath: /config/application.yml
+              subPath: application.yml
+      volumes:
+        - name: vol-hello-k8s-config-map
+          configMap:
+            name: hello-k8s-config-map
+            items:
+              - key: application.yml
+                path: application.yml
 ---
 apiVersion: v1
 kind: ConfigMap
@@ -63,4 +69,5 @@ metadata:
   name: hello-k8s-config-map
   namespace: aaron-test
 data:
-  name: aaron
+  application.yml: |
+    name: aaron
